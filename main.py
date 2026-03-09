@@ -3450,12 +3450,18 @@ class StockApp(MDApp):
                     icon.text_color = icon_color
                 item.add_widget(icon)
                 content_list.add_widget(item)
+
+            import webbrowser
+            add_section('APPLICATION')
+            add_option('Mise à jour', 'Télécharger la nouvelle version', 'cloud-download', lambda x: [self.dialog.dismiss(), webbrowser.open('https://rhseifeddine.github.io/MagPro-Vendeur/')])
+
             if not self.is_seller_mode:
                 add_section('CONNEXION SERVEUR')
                 ip_desc = f'Local: {self.local_server_ip}'
                 if self.external_server_ip:
                     ip_desc += f' | Ext: {self.external_server_ip}'
                 add_option('Configuration IP', ip_desc, 'lan-connect', self.show_ip_config_dialog)
+                
                 add_section('IMPRIMANTE (Bluetooth)')
                 printer_conf = {'name': 'Non configurée', 'mac': '', 'auto': False}
                 if self.store.exists('printer_config'):
@@ -3463,6 +3469,7 @@ class StockApp(MDApp):
                 p_name = printer_conf.get('name', 'Non configurée') or 'Non configurée'
                 add_option('Choisir Imprimante', f'Actuelle: {p_name}', 'printer-wireless', lambda x: [self.dialog.dismiss(), self.open_bluetooth_selector(x)])
                 add_option("Oublier l'imprimante", "Déconnecter l'appareil actuel", 'printer-off', lambda x: self.clear_printer_selection(x), icon_color=(0.8, 0, 0, 1))
+                
                 auto_layout = MDBoxLayout(orientation='horizontal', size_hint_y=None, height=dp(50), padding=(dp(20), 0))
                 lbl_auto = MDLabel(text='Impression Auto après validation', theme_text_color='Primary', size_hint_x=0.8)
                 chk_auto = MDCheckbox(active=printer_conf.get('auto', False), size_hint=(None, None), size=(dp(40), dp(40)), pos_hint={'center_y': 0.5})
@@ -3470,6 +3477,7 @@ class StockApp(MDApp):
                 auto_layout.add_widget(lbl_auto)
                 auto_layout.add_widget(chk_auto)
                 content_list.add_widget(auto_layout)
+                
                 add_section('AFFICHAGE')
                 current_screen_state = True
                 if self.store.exists('screen_config'):
@@ -3481,6 +3489,7 @@ class StockApp(MDApp):
                 screen_layout.add_widget(lbl_screen)
                 screen_layout.add_widget(chk_screen)
                 content_list.add_widget(screen_layout)
+
             scroll_view.add_widget(content_list)
             self.dialog = MDDialog(title='Paramètres', type='custom', content_cls=scroll_view, buttons=[MDFlatButton(text='FERMER', theme_text_color='Custom', text_color=self.theme_cls.primary_color, on_release=lambda x: self.dialog.dismiss())], size_hint=(0.95, None))
             self.dialog.open()
