@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagPro Vendeur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem; }
+        .mobile-card { width: 100%; max-width: 400px; }
+        .hover-lift { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .pulse-btn { animation: pulse-glow 2s infinite; }
+    </style>
+</head>
+<body>
+
+    <script>
+        const APP_DATA = {
+            VERSION: "7.1.0",
+            DATE: "09 Mars 2026",
+            LINK: "https://www.mediafire.com/file/o31b1dz0b3hwltn/MagPro_Vendeur_v7.1.0.apk/file"
+        };
+    </script>
+
+    <div class="mobile-card bg-white p-6 rounded-3xl shadow-lg border-t-8 border-blue-500 hover-lift flex flex-col relative group">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 bg-blue-50 text-blue-600 flex items-center justify-center rounded-2xl text-2xl shrink-0 group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">
+                <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div class="overflow-hidden">
+                <h3 class="font-bold text-gray-900 leading-tight text-base whitespace-nowrap">MagPro Vendeur</h3>
+                <span class="inline-block mt-1 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-md">v<span id="app-version"></span></span>
+            </div>
+        </div>
+        
+        <a id="download-btn" href="#" target="_blank" class="w-full block text-center bg-green-50 hover:bg-green-600 hover:text-white text-green-700 font-bold py-3 px-4 rounded-xl transition shadow-sm pulse-btn">
+            <div class="flex items-center justify-center gap-2 mb-1">
+                <i class="fa-solid fa-download text-lg"></i> 
+                <span class="text-base">TÉLÉCHARGER LA MISE À JOUR</span>
+            </div>
+            <div class="text-xs font-medium opacity-80 flex items-center justify-center">
+                <i class="fa-regular fa-calendar me-1"></i> <span id="app-date"></span> <span id="fire-icon"></span>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('app-version').innerText = APP_DATA.VERSION;
+        document.getElementById('app-date').innerText = APP_DATA.DATE;
+        document.getElementById('download-btn').href = APP_DATA.LINK;
+        const months = { 'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5, 'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11 };
+        try {
+            const parts = APP_DATA.DATE.toLowerCase().split(' ');
+            if (parts.length >= 3) {
+                const day = parseInt(parts[0], 10);
+                const month = months[parts[1]];
+                const year = parseInt(parts[2], 10);
+                if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                    const updateDate = new Date(year, month, day);
+                    const today = new Date();
+                    const diffDays = (today - updateDate) / (1000 * 60 * 60 * 24);
+                    if (diffDays <= 30) {
+                        document.getElementById('fire-icon').innerHTML = '<span class="text-orange-500 animate-pulse text-sm ml-1" title="Mise à jour récente">🔥</span>';
+                    }
+                }
+            }
+        } catch(e) { console.error("Error parsing date for fire icon", e); }
+    </script>
+</body>
+</html>
