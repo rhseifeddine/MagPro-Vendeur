@@ -19,7 +19,6 @@ android.skip_update = False
 android.logcat_filters = *:S python:D
 android.archs = arm64-v8a
 android.add_compilation = True
-android.add_src = False
 android.allow_backup = True
 android.release_artifact = apk
 android.manifest.application_attributes = android:usesCleartextTraffic="true"
