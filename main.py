@@ -3453,7 +3453,7 @@ class StockApp(MDApp):
 
             import webbrowser
             add_section('APPLICATION')
-            add_option('Mise à jour', 'Télécharger la nouvelle version', 'cloud-download', lambda x: [self.dialog.dismiss(), webbrowser.open('https://rhseifeddine.github.io/MagPro-Vendeur/')])
+            add_option('Mise à jour', 'Télécharger la nouvelle version', 'cloud-download', lambda x: [self.dialog.dismiss(), webbrowser.open('https://magpro-officiel.github.io/vendeur/')])
 
             if not self.is_seller_mode:
                 add_section('CONNEXION SERVEUR')
